@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Node2D.gd" type="Script" id=1]
+[ext_resource path="res://game_background_3.1.png" type="Texture" id=2]
+[ext_resource path="res://Water.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+render_priority = 0
+shader = ExtResource( 3 )
+shader_param/blue_tint = Color( 0.137255, 0.768627, 0.992157, 1 )
+shader_param/offset_scale = Vector2( 3, 1 )
+shader_param/amplitude = Vector2( 0.005, 0.001 )
+shader_param/time_scale = Vector2( 5, 3 )
+_sections_unfolded = [ "Resource", "shader_param" ]
+
+[node name="World" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+num_points = 100
+y_offset = 400
+num_background_waves = 4
+max_background_wave_height = 6
+background_wave_compression = 0.1
+background_wave_max_freq = 10
+spring_constant = 25
+dampening = 0.4
+propagation_iterations = 5
+spread = 80
+acceleration_factor = 10
+splash_index_range = 1
+
+[node name="Background" type="Sprite" parent="." index="0"]
+
+show_behind_parent = true
+position = Vector2( 0, -0.35849 )
+scale = Vector2( 0.55, 0.56 )
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform", "Visibility", "Z Index" ]
+
+[node name="Water" type="StaticBody2D" parent="." index="1"]
+
+editor/display_folded = true
+z_index = 2
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Material" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Line2D" type="Line2D" parent="Water" index="0"]
+
+points = PoolVector2Array(  )
+width = 5.0
+default_color = Color( 0.676758, 0.840179, 0.984375, 0.607726 )
+texture_mode = 33099744
+sharp_limit = 2.0
+round_precision = 8
+
+[node name="Polygon2D" type="Polygon2D" parent="Water" index="1"]
+
+material = SubResource( 1 )
+polygon = PoolVector2Array(  )
+uv = PoolVector2Array(  )
+color = Color( 1, 1, 1, 0.54 )
+vertex_colors = PoolColorArray(  )
+offset = Vector2( 0, 0 )
+antialiased = false
+texture = null
+texture_offset = Vector2( 0, 0 )
+texture_scale = Vector2( 1, 1 )
+texture_rotation_degrees = 0.0
+invert_enable = false
+invert_border = 100.0
+_sections_unfolded = [ "Material", "Texture", "Visibility", "Z Index" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Water" index="2"]
+
+build_mode = 0
+polygon = PoolVector2Array(  )
+
+
